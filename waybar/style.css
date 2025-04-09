@@ -1,0 +1,71 @@
+* {
+	background-color: transparent;
+	color: white;
+}
+
+.modules-right .module {
+	min-width: 45px;
+	margin: 0px 5px;
+}
+
+.modules-left .module {
+	min-width: 15px;
+	margin: 0px 5px;
+}
+
+#image {
+	margin-left: 10px;
+	margin-right: 3px;
+}
+
+#pulseaudio-slider trough, #backlight-slider trough {
+	min-height: 8px;
+	min-width: 80px;
+}
+
+#battery {
+	border-radius: 15px;
+	padding-right: 5px; 
+	margin-top: 3px;
+	margin-bottom: 5px;
+}
+
+#battery.warning {
+	background-color: alpha(#fc9c00, 0.6);
+	animation-name: glow;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in;
+}
+
+#battery.critical {
+	background-color: alpha(#ff3333, 0.8);
+	animation-name: glow;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in;
+}
+
+@keyframes glow {
+	100% {background-color: transparent;}
+}
+
+#battery.charging {
+	background-color: transparent;
+}
+
+#workspaces button {
+	transition: font-size 0.1s;
+	border-width: 0;
+	font-size: 1em;
+}
+
+#workspaces button:hover {
+	font-size: 1.3em;
+	box-shadow: inherit;
+	text-shadow: inherit;
+	border-color: inherit;
+	background: inherit;
+}

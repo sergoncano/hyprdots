@@ -1,0 +1,96 @@
+* {
+    font: "Source Code Pro 10";
+
+    background-color: transparent;
+    padding:          0px;
+    margin:           0px;
+
+	window-border-color: @urgent-background;
+	search-bar-color: #fefefe;
+	window-color: @normal-foreground;
+	element-highlighted-color: @urgent-foreground;
+}
+
+window {
+	background-color: @window-color;
+	fullscreen: false;
+ 	location: east;
+  	anchor: east;
+  	height: 80%;
+  	width: 25%;
+  	border-radius: 12px;
+  	border: 3px solid;
+  	border-color: @window-border-color;
+}
+
+mainbox {
+  	padding:  16px;
+}
+
+inputbar {
+	background-color: @search-bar-color;
+  	enabled: true;
+  	border-radius:  16px;  
+  	children: [icon-search,entry];
+  	background-color: @search-bar-color;
+  	width: 100%;
+}
+
+prompt {
+	enabled: false;
+}
+
+icon-search {
+	background-color: @search-bar-color;
+	expand: false;
+	filename: "search";
+	vertical-align: 0.5;
+}
+
+entry {
+	background-color: @search-bar-color;
+}
+
+listview {
+  	margin: 1em 0px 0px 0px;
+  	spacing: 1em;
+  	columns: 3;
+  	flow: horizontal;
+  	fixed-columns: false;
+  	background-color: @window-color;
+	border-radius: 15px;
+	border-color: @window-border-color;
+	border: 0px solid;
+}
+
+element-icon {
+  	cursor: pointer;
+}
+
+element {
+	orientation: vertical;
+	size: 30%;
+	border-radius: 10px;
+	children: [element-icon, element-text];
+	padding: 3px 1px 0px 1px;
+	background-color: @window-color;
+}
+
+element.selected {
+	background-color: @element-highlighted-color;
+	children: [element-icon, element-text];
+}
+
+element-icon {
+	size: 2.5em;
+	horizontal-align: 0.5;
+	transition-duration: 0.1;
+}
+
+element-text {
+	//enabled: false;
+	color: black;
+	text-shadow: 3px 3px;
+	horizontal-align: 0.5;
+	font-size: 0.5em;
+}

@@ -1,0 +1,137 @@
+{
+	"layer": "top",
+	"position": "top",
+	"height": 8,
+	"modules-left": [
+		"image",
+		"cpu",
+		"memory",
+		"network",
+	],
+	"modules-center": [
+		"hyprland/workspaces"
+	],
+	"modules-right": [
+		"group/backlight",
+		"group/audio",
+		"battery",
+		"clock",
+	],
+	"hyprland/workspaces": {
+			"on-click": "activate",
+			"format": "{icon}",
+			"format-icons": {
+				"default": "",
+				"1": "1",
+				"2": "2",
+				"3": "3",
+				"4": "4",
+				"5": "5",
+				"6": "6",
+				"7": "7",
+				"8": "8",
+				"9": "9",
+				"active": "󱓻",
+				"urgent": "󱓻"
+            		},
+			
+	},
+	"group/audio": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 400,
+			"click-to-reveal": false,
+			"transition-left-to-right": false,
+		},
+		"modules": [
+			"pulseaudio",
+			"pulseaudio/slider",
+		]	
+	},
+	"group/backlight": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 400,
+			"click-to-reveal": false,
+			"transition-left-to-right": false,
+		},
+		"modules": [
+			"backlight",
+			"backlight/slider",
+		]	
+	},
+	"battery": {
+		"states": {
+			"warning": 25,
+			"critical": 10,
+		},
+		"format": "{capacity}% {icon}" ,
+		"format-icons": ["", "", "", "", ""],	
+	},
+	"battery.charging": {
+		"format": "{capacity}% ",		
+	},
+	"pulseaudio": {
+		"format": "{volume}% {icon}",
+		"format-bluetooth": "{volume}%  {icon}",
+		"format-muted": "0% ",
+		"format-icons": {
+	      "headphone": "",
+	      "hands-free": "",
+	      "headset": "",
+	      "phone": "",
+	      "portable": "",
+	      "car": "",
+		  "default": ["", "", "󰕾", ""],
+		},
+		"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+	},
+	"backlight": {
+		"format": "{percent} {icon}",
+		"format-icons": [
+			" ",
+			" ",
+			" ",
+			"󰃝 ",
+			"󰃞 ",
+			"󰃟 ",
+			"󰃠 "
+		],
+	},
+	"backlight/slider": {
+		"min": 10,
+		"max": 100,
+	},
+	"image": {
+		"path": "/home/sergio/.dotfiles/waybar/republicLogo.png",
+		"size": 20, 
+		"on-click": "eww open --toggle powermenu",
+	},
+	"network": {
+		"format": "{icon}",
+		"format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+		"format-ethernet": " ",
+		"tooltip-format": "Network name:\t{essid} \nIP:\t\t{ipaddr} \nNetmask:\t{netmask} \nBandwidth:\t{bandwidthTotalBytes}",
+		"tooltip-format-ethernet": "IP:\t\t{ipaddr} \nNetmask:\t{netmask} \nBandwidth:\t{bandwidthTotalBytes}",
+		"on-click": "pkill iwctl || kitty iwctl"
+	},
+	"cpu": {
+		"format": "  {usage}%",
+		"tooltip-format": "{load} system load",
+		"on-click": "pkill htop || kitty htop",
+	},
+	"memory": {
+		"format": " {percentage}% ",
+		"tooltip-format": "{used}GiB/{total}GiB",
+		"on-click": "pkill htop || kitty htop",
+	},
+	"clock": {
+		"tooltip": true,
+		"tooltip-format": "<tt><small>{:%d/%m/%Y}\n{calendar}</small></tt>",
+		"calendar": {
+			"format": {
+				"today": "<u>{}</u>",
+			},
+		},
+	}
+}

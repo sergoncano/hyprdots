@@ -1,0 +1,8 @@
+* {{
+    active-background: {color2};
+    active-foreground: {foreground};
+    normal-background: {background};
+    normal-foreground: {foreground};
+    urgent-background: {color1};
+    urgent-foreground: {color6};
+}}

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+WALLPAPER_DIR="$HOME/Documents/wallpapers/"
+if [ "$1" ]; then
+      if [ -r "$1" ]; then
+          WALLPAPER="$1"
+      else
+          echo "Wallpaper not found or unreadable"
+     fi
+else
+     CURRENT_WALL=$(hyprctl hyprpaper listloaded)
+
+     # Get a random wallpaper that is not the current one
+   WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+fi
+
+# Apply the selected wallpaper and update pywal
+swww img "$WALLPAPER" --transition-type center --transition-duration 1.1 --transition-step 160
+sleep 0.4 && wal -i "$WALLPAPER" -n
+
+# Get wal colors to proceed with tweaks
+highlight_color=$(sed '6q;d' ~/.cache/wal/colors)
+background_color=$(sed '8q;d' ~/.cache/wal/colors)
+border_color=$(sed '2q;d' ~/.cache/wal/colors)
+midground_color=$(sed '7q;d' ~/.cache/wal/colors)
+
+# Update pywalfox
+pywalfox update
+
+# Rofi is mostly updated by pywal, but the selcted item color has to be manually updated
+#sed -i "s|active-background: #......|active-background: ${highlight_color}|" ~/.cache/wal/colors-rofi-light.rasi
+
+# Dunst notification colors have to be manually updated while dunst is killed
+#pkill dunst
+#sed -i "s|frame_color = \"#......\"|frame_color = \"${border_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst border colors"
+#sed -i "s|background = \"#......\"|background = \"${background_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst background colors"
+
+# Since my powermenu is custom, I have to update the colors accordingly
+#sed -i "s|border-color: #......|border-color: ${border_color}|" ~/.config/eww/powermenu/powermenu.scss
+#sed -i "s|background-color: #......|background-color: ${background_color}|" ~/.config/eww/powermenu/powermenu.scss
+#sed -i "s|highlight-color: #......|highlight-color: ${highlight_color}|" ~/.config/eww/powermenu/powermenu.scss
+#sed -i "s|midground-color: #......|midground-color: ${midground_color}|" ~/.config/eww/powermenu/powermenu.scss
+
+# Finally, the hyprland window border color is updated
+sed -i "s|col.active_border = rgb(......)|col.active_border = rgb(${highlight_color//#})|" ~/.config/hypr/hyprland.conf
+
+
