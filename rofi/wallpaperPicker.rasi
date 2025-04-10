@@ -154,7 +154,7 @@ configuration {
       directories-first: false;
       sorting-method:    "name";
       command:			 "changeWallpaper";
-	  directory:		 "/home/sergio/Documents/wallpapers";
+	  directory:		 "/home/sergio/Pictures/wallpapers";
   }
 }
 

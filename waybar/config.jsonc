@@ -105,7 +105,8 @@
 	"image": {
 		"path": "/home/sergio/.dotfiles/waybar/republicLogo.png",
 		"size": 20, 
-		"on-click": "eww open --toggle powermenu",
+		"on-right-click": "eww open --toggle powermenu",
+		"on-click": "pkill rofi || rofi -show drun -show-icons",
 	},
 	"network": {
 		"format": "{icon}",

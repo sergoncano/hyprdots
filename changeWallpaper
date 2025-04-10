@@ -26,21 +26,20 @@ midground_color=$(sed '7q;d' ~/.cache/wal/colors)
 # Update pywalfox
 pywalfox update
 
-# Rofi is mostly updated by pywal, but the selcted item color has to be manually updated
-#sed -i "s|active-background: #......|active-background: ${highlight_color}|" ~/.cache/wal/colors-rofi-light.rasi
-
 # Dunst notification colors have to be manually updated while dunst is killed
-#pkill dunst
-#sed -i "s|frame_color = \"#......\"|frame_color = \"${border_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst border colors"
-#sed -i "s|background = \"#......\"|background = \"${background_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst background colors"
+pkill dunst
+sed -i --follow-symlinks "s|frame_color = \"#......\"|frame_color = \"${border_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst border colors"
+sed -i --follow-symlinks "s|background = \"#......\"|background = \"${background_color}\"|" ~/.config/dunst/dunstrc || notify-send "faliure to change dunst background colors"
 
 # Since my powermenu is custom, I have to update the colors accordingly
-#sed -i "s|border-color: #......|border-color: ${border_color}|" ~/.config/eww/powermenu/powermenu.scss
-#sed -i "s|background-color: #......|background-color: ${background_color}|" ~/.config/eww/powermenu/powermenu.scss
-#sed -i "s|highlight-color: #......|highlight-color: ${highlight_color}|" ~/.config/eww/powermenu/powermenu.scss
-#sed -i "s|midground-color: #......|midground-color: ${midground_color}|" ~/.config/eww/powermenu/powermenu.scss
+pkill eww
+sed -i --follow-symlinks "s|border-color: #......|border-color: ${border_color}|" ~/.config/eww/powermenu/powermenu.scss
+sed -i --follow-symlinks "s|background-color: #......|background-color: ${background_color}|" ~/.config/eww/powermenu/powermenu.scss
+sed -i --follow-symlinks "s|highlight-color: #......|highlight-color: ${highlight_color}|" ~/.config/eww/powermenu/powermenu.scss
+sed -i --follow-symlinks "s|midground-color: #......|midground-color: ${midground_color}|" ~/.config/eww/powermenu/powermenu.scss
+eww daemon
 
 # Finally, the hyprland window border color is updated
-sed -i "s|col.active_border = rgb(......)|col.active_border = rgb(${highlight_color//#})|" ~/.config/hypr/hyprland.conf
+sed -i --follow-symlinks "s|col.active_border = rgba(........)|col.active_border = rgba(${highlight_color//#}ee)|" ~/.config/hypr/hyprland.conf
 
 

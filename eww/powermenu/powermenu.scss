@@ -1,0 +1,48 @@
+$border-color: #323299;
+$background-color: #b1bae1;
+$midground-color: invert($background-color, 13%);
+$highlight-color: #AF5FBB;
+$bradius: 15px;
+$border-width: 2px;
+
+window.powermenu {
+    border-radius: 0px $bradius $bradius 0px;
+}
+
+.powermenu {
+	background-color: transparent;
+	border-radius: $bradius;
+}
+
+.btn-up, .btn-down {
+	background-color: $background-color;
+}
+
+.btn {
+	background-color: $midground-color;
+	border-right: $border-width solid $border-color;
+}
+
+.btn-up {
+	border-radius: 0px $bradius 0px 0px;
+	border-top: $border-width solid $border-color;
+	border-right: $border-width solid $border-color;
+}
+
+.btn-down {
+	border-right: $border-width solid $border-color;
+	border-bottom: $border-width solid $border-color;
+	border-radius: 0px 0px $bradius 0px;
+}
+
+.btn, .btn-up, .btn-down {
+	transition: background-color 0.2s;
+}
+
+.btn:hover, .btn-up:hover, .btn-down:hover {
+	background-color: $highlight-color;
+}
+
+.lab {
+	font-size: 3em;
+}

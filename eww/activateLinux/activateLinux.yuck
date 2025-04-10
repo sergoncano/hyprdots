@@ -1,0 +1,18 @@
+(defwindow activateLinux
+	:monitor 0
+	:stacking "overlay"
+	:windowtype "normal"
+	:namespace "activateLinux"
+	:wm-ignore true
+	:geometry (geometry
+				:width  "20%"
+				:height "15%"
+				:anchor "bottom right"
+			  )
+	(box :class "activateLinux"
+		:orientation "vertical"
+		(label :class "header" :text "Activate Linux" :hexpand false)
+		(label :class "text" :text "Go to Settings to activate Linux")
+	)
+)
+

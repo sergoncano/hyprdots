@@ -1,0 +1,38 @@
+(defwindow powermenu
+	:monitor 0
+	:stacking "overlay"
+	:windowtype "normal"
+	:namespace "powermenu"
+	:wm-ignore true
+	:geometry (geometry
+					:width  "6%"
+					:height "28%"
+					:anchor "center left")
+	(powermenu_layout))
+
+(defwidget powermenu_layout []
+	(box :orientation "vertical"
+		:class "powermenu"
+		(shutdown_button)
+		(reboot_button)
+		(suspend_button)
+	)
+)
+
+(defwidget shutdown_button []
+	(button :onclick "shutdown 0" :class "btn-up"
+		(label :text "" :class "lab" :xalign 0.43)
+	)
+)
+
+(defwidget reboot_button []
+	(button :onclick "reboot" :class "btn"
+		(label :text "" :class "lab"  :xalign 0.45)
+	)
+)
+
+(defwidget suspend_button []
+	(button :onclick "eww close powermenu; systemctl suspend" :class "btn-down"
+		(label :text "" :class "lab"  :xalign 0.55)
+	)
+)
