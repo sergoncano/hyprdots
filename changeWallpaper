@@ -39,6 +39,13 @@ sed -i --follow-symlinks "s|highlight-color: #......|highlight-color: ${highligh
 sed -i --follow-symlinks "s|midground-color: #......|midground-color: ${midground_color}|" ~/.config/eww/powermenu/powermenu.scss
 eww daemon
 
+# Cava colors are updated aswell
+sed -i --follow-symlinks "s|gradient_color_1 = '#......'|gradient_color_1 = '${highlight_color}'|" ~/.config/cava/config
+sed -i --follow-symlinks "s|gradient_color_2 = '#......'|gradient_color_2 = '${midground_color}'|" ~/.config/cava/config
+sed -i --follow-symlinks "s|gradient_color_3 = '#......'|gradient_color_3 = '${border_color}'|" ~/.config/cava/config
+sed -i --follow-symlinks "s|gradient_color_4 = '#......'|gradient_color_4 = '${background_color}'|" ~/.config/cava/config
+
+
 # Finally, the hyprland window border color is updated
 sed -i --follow-symlinks "s|col.active_border = rgba(........)|col.active_border = rgba(${highlight_color//#}ee)|" ~/.config/hypr/hyprland.conf
 
