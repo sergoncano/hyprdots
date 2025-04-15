@@ -1,0 +1,1 @@
+(pkill waybar && sed -i --follow-symlinks "s|gaps_out = 0,12,12,12|gaps_out = 12,12,12,12|" ~/.config/hypr/hyprland.conf) || (coproc waybar && sed -i --follow-symlinks "s|gaps_out = 12,12,12,12|gaps_out = 0,12,12,12|" ~/.config/hypr/hyprland.conf)
