@@ -1,7 +1,7 @@
 {
 	"layer": "top",
 	"position": "top",
-	"height": 8,
+	"height": 36,
 	"modules-left": [
 		"image",
 		"cpu",
@@ -117,7 +117,7 @@
 		"on-click": "pkill iwctl || kitty iwctl"
 	},
 	"cpu": {
-		"format": "  {usage}%",
+		"format": " {usage}%",
 		"tooltip-format": "{load} system load",
 		"on-click": "pkill htop || kitty htop",
 	},

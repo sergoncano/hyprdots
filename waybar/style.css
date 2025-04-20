@@ -1,6 +1,8 @@
 * {
 	background-color: transparent;
 	color: white;
+	font-family: SourceCodePro, FontAwesome6Free, SymbolsNerdFont;
+	text-shadow: 0px 0px 3px #000000;
 }
 
 .modules-right .module {
@@ -15,7 +17,6 @@
 
 #image {
 	margin-left: 10px;
-	margin-right: 3px;
 }
 
 #pulseaudio-slider trough, #backlight-slider trough {
@@ -68,4 +69,8 @@
 	text-shadow: inherit;
 	border-color: inherit;
 	background: inherit;
+}
+
+tooltip {
+	background-color: rgba(0,0,0,0.15);
 }
