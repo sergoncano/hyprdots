@@ -6,7 +6,7 @@ cd $(dirname "$0")
 
 sudo pacman -Sy
 
-read -p "Do you want the hyprland config installed?[Y/n]" hyprland
+read -p "Do you want the general hyprland config installed?[Y/n]" hyprland
 if [[ $hyprland =~ [Yy]$ ]]; then
 
 	# For unit file management
@@ -16,9 +16,27 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 	sudo pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
 	systemctl --user --now enable pipewire pipewire-pulse wireplumber
 	
+	sudo pacman -S pywal
+	echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
+	echo "I recommand setting 'Background extra' to the first color of the second row in the pywal config aswell"
+	
+
+	read -p "Do you want the dunst color scheme to change?[Y/n]" dunst
+	if [[ $dunst =~ [Yy]$ ]]; then
+		mv ~/.config/dunst/dunstrc ~/.config/dunst/dunstrc.backup
+		ln -s ./dunstrc ~/.config/dunst/dunstrc
+	fi
 	# For certain menus
 	sudo pacman -S --needed rofi-wayland
-	
+	mkdir ~/.config/rofi
+	mv ~/.config/rofi/config.rasi ~/.config/rofi/config.rasi.backup
+	ln -s ./rofi/config.rasi ~/.config/rofi/
+	ln -s ./rofi/launchpad.rasi ~/.config/rofi/
+	ln -s ./rofi/hiddenFiles.rasi ~/.config/rofi/
+	ln -s ./rofi/wallpaperPicker.rasi ~/.config/rofi/
+	mv ~/.config/wal/templates/colors-rofi-light.rasi ~/.config/wal/templates/colors-rofi-light.rasi.backup
+	ln -s ./rofi/templates/colors-rofi-light.rasi ~/.config/templates/
+
 	# For screenshotting
 	sudo pacman -S --needed hyprpicker hyprshot 
 
@@ -34,6 +52,8 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 		sudo pacman -S --needed yay
 		yay -S eww
 		mkdir ~/.config/eww
+		mv ~/.config/eww/eww.yuck ~/.config/eww/eww.yuck.backup
+		mv ~/.config/eww/eww.scss ~/.config/eww/eww.scss.backup
 		ln -s ./eww/eww.yuck ~/.config/eww/
 		ln -s ./eww/eww.scss ~/.config/eww/
 		for d in eww/*/; do
@@ -75,14 +95,6 @@ if [[ $kitty =~ [Yy]$ ]]; then
 fi
 
 echo
-
-read -p "Do you want the whole color scheme changer installed?[Y/n]" pywal
-if [[ $pywal =~ [Yy]$ ]]; then
-	sudo pacman -S pywal
-	echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
-	mv ~/.config/dunst/dunstrc ~/.config/dunst/dunstrc.backup
-	ln -s ./dunstrc ~/.config/dunst/dunstrc
-fi
 
 read -p "Do you want the waybar config installed?[Y/n]" waybar
 if [[ $waybar =~ [Yy]$ ]]; then
