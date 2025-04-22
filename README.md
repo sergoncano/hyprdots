@@ -7,6 +7,7 @@ From window borders and notifications to the terminal and the widgets, (mostly) 
 The hyprland keybinds and layout let you enjoy a beautiful design while still being centered on functionality and productivity.
 
 Features:
+<pre>
 ·Toggleable status bar made with waybar
 ·Hyprland and services auto-start with uwsm
 ·Pywal for changing the color palettes of:
@@ -18,7 +19,7 @@ Features:
 ·QOL like keybindings for screenshotting, volume, brightness...
 ·Minimalistic Zelda lockscreen managed by hyprlock and triggered by hypridle
 ·And more
-
+</pre>
 
 ![lockscreen](screenshots/lockscreenScreenshot.png)
 <h4>Automatic installation included!</h4>
