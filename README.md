@@ -1,12 +1,12 @@
 <h1>An auto-colored interface for Hyprland</h1>
 
 ![wallpaper](screenshots/wallpaperScreenshot.png)
-From window borders and notifications to the terminal and the widgets, (mostly) everything is automatically changed to the color palette of your wallpaper, which you can easily change with the built-in wallpaper selector.
+From window borders and notifications to the terminal and the widgets, (mostly) everything is automatically changed to the color palette of your wallpaper, which you can easily change with the built-in wallpaper selector. And that's the tip of it!
 
 ![menus](screenshots/menuScreenshot.png)
 The hyprland keybinds and layout let you enjoy a beautiful design while still being centered on functionality and productivity.
 
-Features:
+<h4> Features: <h4>
 <pre>
 ·Toggleable status bar made with waybar
 ·Hyprland and services auto-start with uwsm
