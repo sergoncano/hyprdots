@@ -103,7 +103,7 @@
 		"max": 100,
 	},
 	"image": {
-		"path": "/home/sergio/.dotfiles/waybar/republicLogo.png",
+		"path": "/home/sergio/hyprdots/waybar/republicLogo.png",
 		"size": 20, 
 		"on-click-right": "eww open --toggle powermenu",
 		"on-click": "pkill rofi || rofi -show drun -show-icons",
