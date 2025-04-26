@@ -17,6 +17,13 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 	# For unit file management
 	pacman -S --needed uwsm
 
+    # For brightness
+	read -p "Do you want software for volume control? yay will be installed if it is not already present[Y/n]" light
+	if [[ $dunst =~ [Yy]$ ]]; then
+		pacman -S --needed yay
+        yay -S light
+    fi
+
 	# For audio control
 	pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
 	systemctl --user --now enable pipewire pipewire-pulse wireplumber
