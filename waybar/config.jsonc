@@ -129,6 +129,7 @@
 	"clock": {
 		"tooltip": true,
 		"tooltip-format": "<tt><small>{:%d/%m/%Y}\n{calendar}</small></tt>",
+        "on-click": "kitty sh -c \"cal; read\"",
 		"calendar": {
 			"format": {
 				"today": "<u>{}</u>",
