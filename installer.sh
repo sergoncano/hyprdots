@@ -46,8 +46,9 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 	ln -s $HOMEDIR/hyprdots/rofi/launchpad.rasi $HOMEDIR/.config/rofi/
 	ln -s $HOMEDIR/hyprdots/rofi/hiddenFiles.rasi $HOMEDIR/.config/rofi/
 	ln -s $HOMEDIR/hyprdots/rofi/wallpaperPicker.rasi $HOMEDIR/.config/rofi/
+    mkdir $HOMEDIR/.config/wal/templates/
 	mv $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi.backup
-	ln -s $HOMEDIR/hyprdots/rofi/templates/colors-rofi-light.rasi $HOMEDIR/.config/templates/
+	ln -s $HOMEDIR/hyprdots/rofi/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/
     sed -i --follow-symlinks "s|/home/sergio/Pictures/wallpapers|$HOMEDIR/Pictures/wallpapers|" $HOMEDIR/hyprdots/rofi/wallpaperPicker.rasi
 	# For screenshotting
     
