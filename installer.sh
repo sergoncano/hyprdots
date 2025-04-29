@@ -9,36 +9,39 @@ cd $(dirname "$0")
 
 HOMEDIR=$(getent passwd $SUDO_USER | cut -d: -f6)
 
-pacman -Sy
-
 read -p "Do you want the general hyprland config installed?[Y/n]" hyprland
 if [[ $hyprland =~ [Yy]$ ]]; then
 
-	# For unit file management
-	pacman -S --needed uwsm
 
     # For brightness
-	read -p "Do you want software for volume control? yay will be installed if it is not already present[Y/n]" light
-	if [[ $dunst =~ [Yy]$ ]]; then
+	read -p "Do you want software for brightness control? yay will be installed if it is not already present[Y/n]" light
+	if [[ $light =~ [Yy]$ ]]; then
 		pacman -S --needed yay
         yay -S light
     fi
 
 	# For audio control
-	pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
-	systemctl --user --now enable pipewire pipewire-pulse wireplumber
-	
-	pacman -S --needed python-pywal
-	echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
-	echo "I recommand setting 'Background extra' to the first color of the second row in the pywal config aswell"
-	
+	read -p "Do you want software for audio control? yay will be installed if it is not already present[Y/n]" audio
+	if [[ $audio =~ [Yy]$ ]]; then
+	    pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
+	    systemctl --user --now enable pipewire pipewire-pulse wireplumber
+    fi
 
+	# For screenshotting
+	read -p "Do you want software for screenshotting? yay will be installed if it is not already present[Y/n]" screenshots
+	if [[ $screenshots =~ [Yy]$ ]]; then
+        pacman -S --needed hyprpicker 
+		pacman -S --needed yay
+        yay -Sc hyprshot
+    fi
+	
 	read -p "Do you want the dunst color scheme to change?[Y/n]" dunst
 	if [[ $dunst =~ [Yy]$ ]]; then
 		mv $HOMEDIR/.config/dunst/dunstrc $HOMEDIR/.config/dunst/dunstrc.backup
 		ln -s $HOMEDIR/hyprdots/dunstrc $HOMEDIR/.config/dunst/dunstrc
 	fi
-	# For certain menus
+
+    # For certain menus
 	pacman -S --needed rofi-wayland
 	mkdir $HOMEDIR/.config/rofi
 	mv $HOMEDIR/.config/rofi/config.rasi $HOMEDIR/.config/rofi/config.rasi.backup
@@ -50,18 +53,14 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 	mv $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi.backup
 	ln -s $HOMEDIR/hyprdots/rofi/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/
     sed -i --follow-symlinks "s|/home/sergio/Pictures/wallpapers|$HOMEDIR/Pictures/wallpapers|" $HOMEDIR/hyprdots/rofi/wallpaperPicker.rasi
-	# For screenshotting
-    
-	read -p "Do you want software for screenshotting? yay will be installed if it is not already present[Y/n]" screenshots
-	if [[ $screenshots =~ [Yy]$ ]]; then
-        pacman -S --needed hyprpicker 
-		pacman -S --needed yay
-        yay -Sc hyprshot
-    fi
 	# For playing media
 	pacman -S --needed playerctl
 	
-	# Wallpaper
+	pacman -S --needed python-pywal
+	echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
+	echo "I recommand setting 'Background extra' to the first color of the second row in the pywal config aswell"
+	
+    # Wallpaper
 	pacman -S --needed swww
 
 	read -p "Do you want widgets installed? yay will be installed if it is not already present[Y/n]" eww
@@ -81,7 +80,10 @@ if [[ $hyprland =~ [Yy]$ ]]; then
 		done
 	fi
 
-	ln -s $HOMEDIR/hyprdots/scripts/changeWallpaper /usr/local/bin/
+	# For unit file management
+	pacman -S --needed uwsm
+	
+    ln -s $HOMEDIR/hyprdots/scripts/changeWallpaper /usr/local/bin/
 	ln -s $HOMEDIR/hyprdots/scripts/toggleWaybar  /usr/local/bin/
 	mkdir $HOMEDIR/.config/hypr/
 	mv $HOMEDIR/.config/hypr/hyprland.conf $HOMEDIR/.config/hypr/hyprland.conf.backup

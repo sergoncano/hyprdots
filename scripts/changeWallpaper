@@ -47,6 +47,6 @@ sed -i --follow-symlinks "s|gradient_color_4 = '#......'|gradient_color_4 = '${b
 
 
 # Finally, the hyprland window border color is updated
-sed -i --follow-symlinks "s|col.active_border = rgba(........)|col.active_border = rgba(${highlight_color//#}ee)|" ~/.config/hypr/hyprland.conf
+sed -i --follow-symlinks "s|col.active_border = rgba(........)|col.active_border = rgba(${highlight_color:1}ee)|" ~/.config/hypr/hyprland.conf
 
 
