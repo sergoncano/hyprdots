@@ -107,6 +107,7 @@ if [[ $hyprlock =~ [Yy]$ ]]; then
 	mv $HOMEDIR/.config/hypr/hypridle.conf $HOMEDIR/.config/hypr/hypridle.conf.backup
 	ln -s $HOMEDIR/hyprdots/hypr/hyprlock.conf $HOMEDIR/.config/hypr/
 	ln -s $HOMEDIR/hyprdots/hypr/hypridle.conf $HOMEDIR/.config/hypr/
+	mkdir $HOMEDIR/.local/share/fonts/
 	cp $HOMEDIR/hyprdots/assets/"The Wild Breath of Zelda.otf" $HOMEDIR/.local/share/fonts/
     mkdir $HOMEDIR/Pictures/
     mkdir $HOMEDIR/Pictures/walllpapers/
