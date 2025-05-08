@@ -135,6 +135,12 @@ if [[ $waybar =~ [Yy]$ ]]; then
 	ln -s $HOMEDIR/hyprdots/waybar/style.css $HOMEDIR/.config/waybar/
     sed -i --follow-symlinks "s|/home/sergio/hyprdots/waybar/republicLogo.png|$HOMEDIR/hyprdots/waybar/republicLogo.png|"
 fi
+read -p "Do you want the nvim config installed?[Y/n]" nvim
+if [[ $nvim =~ [Yy]$ ]]; then
+	mv $HOMEDIR/.config/nvim $HOMEDIR/.config/nvim.old
+	ln -s $HOMEDIR/hyprdots/nvim/ $HOMEDIR/.config/
+fi
+
 
 read -p "Do you want the bash config installed?[Y/n]" bashconf 
 if [[ $bashconf =~ [Yy]$ ]]; then
