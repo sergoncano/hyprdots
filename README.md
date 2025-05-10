@@ -31,8 +31,11 @@ $ git clone https://github.com/sergoncano/hyprdots.git
 $ cd hyprdots
 $ chmod +x installer.sh; ./installer.sh
 ```
-Run with sudo if needed, although I encourage you to read what the installer does before running it.
+You must run the script as sudo, although I encourage you to read what the installer does before running it.
 As of now the installer only works on arch, change the pacman and yay commands if you wish to run it in another distro.
+
+![nvim](screenshots/nvimScreenshot.png)
+The files also include my own Neovim config (with colors changing with the wallpaper, just like the rest of the config) and all the neovim utilities, keybindings and plugins I find useful.
 
 These dotfiles are my first and hence they are not perfect, but I'll be updating them constantly.
 I'm open for suggestions and pull requests. 
