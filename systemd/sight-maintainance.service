@@ -1,0 +1,7 @@
+# /usr/lib/systemd/system/sight-maintainance.service
+[Unit]
+Description=Remind the user to take a break from screens
+
+[Service]
+Type=oneshot
+ExecStart=notify-send "Remember to take a break from screens"

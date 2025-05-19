@@ -1,0 +1,10 @@
+# /usr/lib/systemd/system/sight-maintainance.timer
+[Unit]
+Description=Remind the user to take a break from screens
+
+[Timer]
+OnUnitActiveSec=1h
+OnBootSec=1h
+
+[Install]
+WantedBy=timers.target
