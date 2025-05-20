@@ -1,71 +1,86 @@
+#!/bin/bash
 echo "This installer will prompt you to choose which features of the hyprdots you want installed on your system. 
-Please read the code carefully before executing with elevated privileges."
+The script requires yay installed on your system. If using another aur sudo pacman wrapper, please edit this file."
 echo
 
-if [[ $(whoami) =~ "root" ]]; then
+	if [ "$EUID" -eq 0 ]; then
+		echo "Do not run this script as sudo. Please read what it does"
+		exit
+	fi
 
     cd $(dirname "$0")
 
-    HOMEDIR=$(getent passwd $SUDO_USER | cut -d: -f6)
+    HOMEDIR="/home/$(whoami)"
 
     read -p "Do you want the general hyprland config installed?[Y/n]" hyprland
     if [[ $hyprland =~ [Yy]$ ]]; then
-
-        # For brightness
-        read -p "Do you want software for brightness control? yay will be installed if it is not already present[Y/n]" light
-        if [[ $light =~ [Yy]$ ]]; then
-            pacman -S --needed yay
-            yay -S light
-        fi
-
-        # For audio control
-        read -p "Do you want software for audio control? yay will be installed if it is not already present[Y/n]" audio
-        if [[ $audio =~ [Yy]$ ]]; then
-            pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
-            systemctl --user --now enable pipewire pipewire-pulse wireplumber
-        fi
-
-        # For screenshotting
-        read -p "Do you want software for screenshotting? yay will be installed if it is not already present[Y/n]" screenshots
-        if [[ $screenshots =~ [Yy]$ ]]; then
-            pacman -S --needed hyprpicker
-            pacman -S --needed yay
-            yay -Sc hyprshot
-        fi
-
-        read -p "Do you want the dunst color scheme to change?[Y/n]" dunst
-        if [[ $dunst =~ [Yy]$ ]]; then
-            mv $HOMEDIR/.config/dunst/dunstrc $HOMEDIR/.config/dunst/dunstrc.backup
-            ln -s $HOMEDIR/hyprdots/dunstrc $HOMEDIR/.config/dunst/dunstrc
-        fi
-
-        # For certain menus
-        pacman -S --needed rofi-wayland
+	# For certain menus
+        sudo pacman -S --needed rofi-wayland
         mkdir -p $HOMEDIR/.config/rofi
-        mv $HOMEDIR/.config/rofi/config.rasi $HOMEDIR/.config/rofi/config.rasi.backup
+        sudo mv $HOMEDIR/.config/rofi/config.rasi $HOMEDIR/.config/rofi/config.rasi.backup
         ln -s $HOMEDIR/hyprdots/rofi/config.rasi $HOMEDIR/.config/rofi/
         ln -s $HOMEDIR/hyprdots/rofi/launchpad.rasi $HOMEDIR/.config/rofi/
         ln -s $HOMEDIR/hyprdots/rofi/hiddenFiles.rasi $HOMEDIR/.config/rofi/
         ln -s $HOMEDIR/hyprdots/rofi/wallpaperPicker.rasi $HOMEDIR/.config/rofi/
         mkdir -p $HOMEDIR/.config/wal/templates/
-        mv $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi.backup
+        sudo mv $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/colors-rofi-light.rasi.backup
         ln -s $HOMEDIR/hyprdots/rofi/templates/colors-rofi-light.rasi $HOMEDIR/.config/wal/templates/
         sed -i --follow-symlinks "s|/home/sergio/Pictures/wallpapers|$HOMEDIR/Pictures/wallpapers|" $HOMEDIR/hyprdots/rofi/wallpaperPicker.rasi
         # For playing media
-        pacman -S --needed playerctl
+        sudo pacman -S --needed playerctl
 
-        pacman -S --needed python-pywal
-        echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
-        echo "I recommand setting 'Background extra' to the first color of the second row in the pywal config aswell"
+        sudo pacman -S --needed python-pywal
 
         # Wallpaper
-        pacman -S --needed swww
+        sudo pacman -S --needed swww
+	
+	# For unit file management
+        sudo pacman -S --needed uwsm
 
-        read -p "Do you want widgets installed? yay will be installed if it is not already present[Y/n]" eww
+        ln -s $HOMEDIR/hyprdots/scripts/changeWallpaper /usr/local/bin/
+        ln -s $HOMEDIR/hyprdots/scripts/toggleWaybar /usr/local/bin/
+        mkdir -p $HOMEDIR/.config/hypr/
+        mv $HOMEDIR/.config/hypr/hyprland.conf $HOMEDIR/.config/hypr/hyprland.conf.backup
+        ln -s $HOMEDIR/hyprdots/hypr/hyprland.conf $HOMEDIR/.config/hypr/
+
+        read -p "What keyboard layout do you wish to use? " layout
+        sed -i --follow-symlinks "s|kb_layout = es|kb_layout = $layout|" $HOMEDIR/hyprdots/hypr/hyprland.conf
+
+        # For brightness
+        read -p "Do you want software for brightness control?[Y/n]" light
+        if [[ $light =~ [Yy]$ ]]; then
+           yay -S light
+        fi
+
+        # For audio control
+        read -p "Do you want software for audio control?[Y/n]" audio
+        if [[ $audio =~ [Yy]$ ]]; then
+            sudo pacman -S --needed pamixer pipewire-alsa wireplumber pipewire-pulse
+            systemctl --user --now enable pipewire pipewire-pulse wireplumber
+        fi
+
+        # For screenshotting
+        read -p "Do you want software for screenshotting?[Y/n]" screenshots
+        if [[ $screenshots =~ [Yy]$ ]]; then
+            sudo pacman -S --needed hyprpicker
+            yay -S hyprshot
+        fi
+
+	# For notification colors
+        read -p "Do you want the dunst color scheme to change?[Y/n]" dunst
+        if [[ $dunst =~ [Yy]$ ]]; then
+	    mkdir -p $HOMEDIR/.config/dunst/
+            mv $HOMEDIR/.config/dunst/dunstrc $HOMEDIR/.config/dunst/dunstrc.backup
+            ln -s $HOMEDIR/hyprdots/dunstrc $HOMEDIR/.config/dunst/
+	    echo "Dunst has NOT been installed, do it manually if you don't have it yet."
+        fi
+
+	#For the powermenu and certain other widgets
+	read -p "Do you want widgets installed?[Y/n]" eww
         if [[ $eww =~ [Yy]$ ]]; then
             # Widgets
-            pacman -S --needed yay
-            yay -Sc eww
+	    read -p "Eww will take a longer time to get installed since it is a rust project. Press any key to proceed." dummie
+            yay -S eww
             mkdir -p $HOMEDIR/.config/eww
             mv $HOMEDIR/.config/eww/eww.yuck $HOMEDIR/.config/eww/eww.yuck.backup
             mv $HOMEDIR/.config/eww/eww.scss $HOMEDIR/.config/eww/eww.scss.backup
@@ -77,28 +92,17 @@ if [[ $(whoami) =~ "root" ]]; then
                 ln -s $HOMEDIR/hyprdots/eww/$d.scss $HOMEDIR/.config/eww/$d/
             done
         fi
-
-        # For unit file management
-        pacman -S --needed uwsm
-
-        ln -s $HOMEDIR/hyprdots/scripts/changeWallpaper /usr/local/bin/
-        ln -s $HOMEDIR/hyprdots/scripts/toggleWaybar /usr/local/bin/
-        mkdir -p $HOMEDIR/.config/hypr/
-        mv $HOMEDIR/.config/hypr/hyprland.conf $HOMEDIR/.config/hypr/hyprland.conf.backup
-        ln -s $HOMEDIR/hyprdots/hypr/hyprland.conf $HOMEDIR/.config/hypr/
-
-        echo "What keyboard layout do you wish to use?"
-        read -p "Mind capital letters, if you mispell it you might have a hard time reconfiguring it." layout
-        sed -i --follow-symlinks "s|kb_layout = es|kb_layout = $layout|" $HOMEDIR/hyprdots/hypr/hyprland.conf
+	changeWallpaper $HOMEDIR/hyprdots/assets/lockscreen.jpg
 
         hyprctl reload
     fi
 
     echo
-
+    
+    # For the lockscreen/screensaver
     read -p "Do you want the hyprlock/hypridle config installed?[Y/n]" hyprlock
     if [[ $hyprlock =~ [Yy]$ ]]; then
-        pacman -S --needed hypridle hyprlock
+        sudo pacman -S --needed hypridle hyprlock
         mkdir -p $HOMEDIR/.config/hypr/
         mv $HOMEDIR/.config/hypr/hyprlock.conf $HOMEDIR/.config/hypr/hyprlock.conf.backup
         mv $HOMEDIR/.config/hypr/hypridle.conf $HOMEDIR/.config/hypr/hypridle.conf.backup
@@ -106,14 +110,15 @@ if [[ $(whoami) =~ "root" ]]; then
         ln -s $HOMEDIR/hyprdots/hypr/hypridle.conf $HOMEDIR/.config/hypr/
         mkdir -p $HOMEDIR/.local/share/fonts/
         cp $HOMEDIR/hyprdots/assets/"The Wild Breath of Zelda.otf" $HOMEDIR/.local/share/fonts/
-        mkdir -p $HOMEDIR/Pictures/walllpapers/
+	mkdir -p $HOMEDIR/Pictures/wallpapers/
         ln -s $HOMEDIR/hyprdots/assets/lockscreen.jpg $HOMEDIR/Pictures/wallpapers/
         systemctl --user enable --now hypridle
     fi
 
     echo
 
-    read -p "Do you want the kitty config installed?[Y/n]" kitty
+    # For terminal transparency
+    read -p "Do you want kitty to be transparent?[Y/n]" kitty
     if [[ $kitty =~ [Yy]$ ]]; then
         mkdir -p $HOMEDIR/.config/kitty/
         mv $HOMEDIR/.config/kitty/kitty.conf $HOMEDIR/.config/kitty/kitty.conf.backup
@@ -124,32 +129,48 @@ if [[ $(whoami) =~ "root" ]]; then
 
     read -p "Do you want the waybar config installed?[Y/n]" waybar
     if [[ $waybar =~ [Yy]$ ]]; then
-        pacman -S --needed waybar ttf-font-awesome
+        sudo pacman -S --needed waybar ttf-font-awesome
         mkdir -p $HOMEDIR/.config/waybar
-        mv $HOMEDIR/.config/waybar/config.jsonc $HOMEDIR/.config/waybar/config.jsonc.backup
-        mv $HOMEDIR/.config/waybar/style.css $HOMEDIR/.config/waybar/style.css.backup
+        sudo mv $HOMEDIR/.config/waybar/config.jsonc $HOMEDIR/.config/waybar/config.jsonc.backup
+        sudo mv $HOMEDIR/.config/waybar/style.css $HOMEDIR/.config/waybar/style.css.backup
         ln -s $HOMEDIR/hyprdots/waybar/config.jsonc $HOMEDIR/.config/waybar/
         ln -s $HOMEDIR/hyprdots/waybar/style.css $HOMEDIR/.config/waybar/
-        sed -i --follow-symlinks "s|/home/sergio/hyprdots/waybar/republicLogo.png|$HOMEDIR/hyprdots/waybar/republicLogo.png|"
+        sed -i --follow-symlinks "s|/home/sergio/hyprdots/waybar/republicLogo.png|$HOMEDIR/hyprdots/waybar/republicLogo.png|" $HOMEDIR/hyprdots/waybar/config.jsonc
     fi
+
+    echo
+
+    read -p "Do you want the source code pro font installed?[Y/n]" scp
+    if [[ $scp =~ [Yy]$ ]]; then
+	    sudo pacman -S adobe-source-code-pro-fonts
+    fi
+
+    echo
+
     read -p "Do you want the nvim config installed?[Y/n]" nvim
     if [[ $nvim =~ [Yy]$ ]]; then
+		# npm and unzip must be installed in order for LSPs to work
+		sudo pacman -S npm unzip
         mv $HOMEDIR/.config/nvim $HOMEDIR/.config/nvim.old
         ln -s $HOMEDIR/hyprdots/nvim/ $HOMEDIR/.config/
     fi
 
-    read -p "Do you want the bash config installed?[Y/n]" bashconf
+    echo
+
+    read -p "Do you want hyprland to be launched on login?[Y/n]" bashconf
     if [[ $bashconf =~ [Yy]$ ]]; then
         mv $HOMEDIR/.bashrc $HOMEDIR/.bashrc.backup
         ln -s $HOMEDIR/hyprdots/.bashrc $HOMEDIR/.bashrc
     fi
+ 
+    echo
+
     read -p "Do you want to get an hourly reminder to take a break from screens?[Y/n]" sight
     if [[ $sight =~ [Yy]$ ]]; then
         ln -s $HOMEDIR/hyprdots/systemd/sight-maintainance.timer $HOMEDIR/.config/systemd/user/
         ln -s $HOMEDIR/hyprdots/systemd/sight-maintainance.service $HOMEDIR/.config/systemd/user/
-        su $SUDO_USER -c "systemctl --user enable sight-maintainance.timer"
+        systemctl --user enable sight-maintainance.timer
     fi
-    su $SUDO_USER -c "hyprctl reload"
-else
-    echo "This script must be run as root!"
-fi
+    hyprctl reload
+    echo "!!! THE PYWAL BROWSER EXTENSION MUST BE INSTALLED MANUALLY !!!"
+    echo "I recommand setting 'Background extra' to the first color of the second row in the pywal browser config aswell"
