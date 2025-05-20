@@ -147,9 +147,9 @@ if [[ $(whoami) =~ "root" ]]; then
     if [[ $sight =~ [Yy]$ ]]; then
         ln -s $HOMEDIR/hyprdots/systemd/sight-maintainance.timer $HOMEDIR/.config/systemd/user/
         ln -s $HOMEDIR/hyprdots/systemd/sight-maintainance.service $HOMEDIR/.config/systemd/user/
-        systemctl --user enable sight-maintainance.timer
+        su $SUDO_USER -c "systemctl --user enable sight-maintainance.timer"
     fi
-    hyprctl reload
+    su $SUDO_USER -c "hyprctl reload"
 else
     echo "This script must be run as root!"
 fi
