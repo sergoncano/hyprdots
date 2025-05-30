@@ -4,4 +4,4 @@ Description=Remind the user to take a break from screens
 
 [Service]
 Type=oneshot
-ExecStart=notify-send "Remember to take a break from screens"
+ExecStart=dunstify -t 1000000 "Remember to take a break from screens"
