@@ -20,7 +20,7 @@
 )
 
 (defwidget shutdown_button []
-	(button :onclick "shutdown 0" :class "btn-up"
+	(button :onclick "systemctl poweroff" :class "btn-up"
 		(label :text "" :class "lab" :xalign 0.43)
 	)
 )
@@ -32,7 +32,7 @@
 )
 
 (defwidget suspend_button []
-	(button :onclick "eww close powermenu; systemctl suspend" :class "btn-down"
+	(button :onclick "systemctl suspend" :class "btn-down"
 		(label :text "" :class "lab"  :xalign 0.55)
 	)
 )

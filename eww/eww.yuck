@@ -1,2 +1,2 @@
-(include "./activateLinux/activateLinux.yuck")
 (include "./powermenu/powermenu.yuck")
+(include "./activateLinux/activateLinux.yuck")

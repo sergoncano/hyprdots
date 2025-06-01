@@ -86,11 +86,14 @@ if [[ $hyprland =~ [Yy]$ ]]; then
         mv $HOMEDIR/.config/eww/eww.scss $HOMEDIR/.config/eww/eww.scss.backup
         ln -s $HOMEDIR/hyprdots/eww/eww.yuck $HOMEDIR/.config/eww/
         ln -s $HOMEDIR/hyprdots/eww/eww.scss $HOMEDIR/.config/eww/
-        for d in eww/*/; do
+        cd eww/
+        for d in $(ls -d */); do
             mkdir -p $HOMEDIR/.config/eww/$d
-            ln -s $HOMEDIR/hyprdots/eww/$d.yuck $HOMEDIR/.config/eww/$d/
-            ln -s $HOMEDIR/hyprdots/eww/$d.scss $HOMEDIR/.config/eww/$d/
+            d="${d::-1}"
+            ln -s $HOMEDIR/hyprdots/eww/$d/$d.yuck $HOMEDIR/.config/eww/$d/
+            ln -s $HOMEDIR/hyprdots/eww/$d/$d.scss $HOMEDIR/.config/eww/$d/
         done
+        cd -
     fi
     changeWallpaper $HOMEDIR/hyprdots/assets/lockscreen.jpg
 
@@ -153,14 +156,6 @@ if [[ $nvim =~ [Yy]$ ]]; then
     sudo pacman -S npm unzip
     mv $HOMEDIR/.config/nvim $HOMEDIR/.config/nvim.old
     ln -s $HOMEDIR/hyprdots/nvim/ $HOMEDIR/.config/
-fi
-
-echo
-
-read -p "Do you want hyprland to be launched on login?[Y/n]" bashconf
-if [[ $bashconf =~ [Yy]$ ]]; then
-    mv $HOMEDIR/.bashrc $HOMEDIR/.bashrc.backup
-    ln -s $HOMEDIR/hyprdots/.bashrc $HOMEDIR/.bashrc
 fi
 
 echo
