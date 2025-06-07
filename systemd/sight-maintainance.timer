@@ -4,7 +4,7 @@ Description=Remind the user to take a break from screens
 
 [Timer]
 OnUnitActiveSec=1h 5min
-OnBootSec=1h 5min
+OnBootSec=1h
 
 [Install]
 WantedBy=timers.target
