@@ -116,12 +116,12 @@
 	"cpu": {
 		"format": " {usage}%",
 		"tooltip-format": "{load} system load",
-		"on-click": "pkill htop || kitty htop",
+		"on-click": "pkill btop || kitty btop",
 	},
 	"memory": {
 		"format": " {percentage}% ",
 		"tooltip-format": "{used}GiB/{total}GiB",
-		"on-click": "pkill htop || kitty htop",
+		"on-click": "pkill btop || kitty btop",
 	},
 	"clock": {
 		"tooltip": true,
