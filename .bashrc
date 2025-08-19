@@ -13,3 +13,6 @@ PS1='[\u@\h \W]\$ '
 (cat ~/.cache/wal/sequences &)
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# Created by `pipx` on 2025-06-10 14:11:05
+export PATH="$PATH:/home/sergio/.local/bin"
