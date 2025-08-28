@@ -1,22 +1,23 @@
 #!/usr/bin/env bash
 WALLPAPER_DIR="$HOME/Documents/wallpapers/"
 if [ "$1" ]; then
-      if [ -r "$1" ]; then
-          WALLPAPER="$1"
-      else
-          echo "Wallpaper not found or unreadable"
-     fi
+    if [ -r "$1" ]; then
+        WALLPAPER="$1"
+    else
+        echo "Wallpaper not found or unreadable"
+    fi
 else
-     CURRENT_WALL=$(hyprctl hyprpaper listloaded)
+    CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
-     # Get a random wallpaper that is not the current one
-   WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+    # Get a random wallpaper that is not the current one
+    WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
 fi
 
 # Apply the selected wallpaper and update pywal
 swww img "$WALLPAPER" --transition-type center --transition-duration 1.1 --transition-step 160
-sleep 0.4 && wal -i "$WALLPAPER" -n
-
+if [ "$(file "$WALLPAPER" | grep animated)" == "" ]; then
+    sleep 0.4 && wal -i "$WALLPAPER" -n
+fi
 # Get wal colors to proceed with tweaks
 highlight_color=$(sed '6q;d' ~/.cache/wal/colors)
 background_color=$(sed '8q;d' ~/.cache/wal/colors)
@@ -45,8 +46,5 @@ sed -i --follow-symlinks "s|gradient_color_2 = '#......'|gradient_color_2 = '${m
 sed -i --follow-symlinks "s|gradient_color_3 = '#......'|gradient_color_3 = '${border_color}'|" ~/.config/cava/config
 sed -i --follow-symlinks "s|gradient_color_4 = '#......'|gradient_color_4 = '${background_color}'|" ~/.config/cava/config
 
-
 # Finally, the hyprland window border color is updated
 sed -i --follow-symlinks "s|col.active_border = rgba(........)|col.active_border = rgba(${highlight_color:1}ee)|" ~/.config/hypr/hyprland.conf
-
-
