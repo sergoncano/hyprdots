@@ -36,4 +36,5 @@ require("lazy").setup({
 	require("plugins.indent"),
 	require("plugins.autopairs"),
 	require("plugins.colorizer"),
+	require("plugins.cargo"),
 })
