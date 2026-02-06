@@ -86,13 +86,19 @@ if [[ $screenshots =~ [Yy]$ ]]; then
 fi
 
 # For notification colors
-read -p "Do you want the dunst color scheme to change?[Y/n]" dunst
+read -p "Do you want to use dunst?[Y/n]" dunst
 if [[ $dunst =~ [Yy]$ ]]; then
-    echo "Configuring notifications..."
+    echo "Configuring dunst..."
     sudo pacman -S --needed dunst
     mkdir -p $HOMEDIR/.config/dunst/
     mv $HOMEDIR/.config/dunst/dunstrc $HOMEDIR/.config/dunst/dunstrc.backup
     ln -s $HOMEDIR/hyprdots/dunstrc $HOMEDIR/.config/dunst/
+else
+    read -p "Do you want to use swaync?[Y/n]" swaync
+    if [[ $swaync =~ [Yy]$ ]]; then
+        echo "Installing swaync..."
+        sudo pacman -S --needed swaync
+    fi
 fi
 
 #For the powermenu and certain other widgets
