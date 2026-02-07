@@ -155,7 +155,7 @@ echo
 
 read -p "Do you want the waybar config installed?[Y/n]" waybar
 if [[ $waybar =~ [Yy]$ ]]; then
-    sudo pacman -S --needed waybar ttf-font-awesome
+    sudo pacman -S --needed waybar ttf-sourcecodepro-nerd
     mkdir -p $HOMEDIR/.config/waybar
     sudo mv $HOMEDIR/.config/waybar/config.jsonc $HOMEDIR/.config/waybar/config.jsonc.backup
     sudo mv $HOMEDIR/.config/waybar/style.css $HOMEDIR/.config/waybar/style.css.backup
